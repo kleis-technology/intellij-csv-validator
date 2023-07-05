@@ -69,37 +69,5 @@ public class CsvPlugin implements StartupActivity, StartupActivity.DumbAware, St
     @Override
     public void runActivity(@NotNull Project project) {
         doAsyncProjectMaintenance(project);
-
-        NotificationGroup notificationGroup = NotificationGroupManager.getInstance().getNotificationGroup("net.seesharpsoft.intellij.plugins.csv");
-        if (notificationGroup == null || CsvEditorSettings.getInstance().checkCurrentPluginVersion(getVersion())) {
-            return;
-        }
-
-        Notification notification = notificationGroup.createNotification(
-                "CSV Editor " + getVersion() + " - Change Notes",
-                getChangeNotes() +
-                        "<p>You can always <b>customize plugin settings</b> to your likings (shortcuts below)!</p>" +
-                        "<br>" +
-                        "<p>Visit the <b>CSV Editor homepage</b> to read more about the available features & settings, " +
-                        "submit issues & feature request, " +
-                        "or show your support by rating this plugin. <b>Thanks!</b></p>"
-                ,
-                NotificationType.INFORMATION
-        );
-
-        notification.addAction(NotificationAction.create("General Settings", (anActionEvent, notification1) -> {
-            openLink(project, "#" + CsvEditorSettingsProvider.CSV_EDITOR_SETTINGS_ID);
-        }));
-        notification.addAction(NotificationAction.create("Color Scheme", (anActionEvent, notification1) -> {
-            openLink(project, "#reference.settingsdialog.IDE.editor.colors.CSV/TSV/PSV");
-        }));
-        notification.addAction(NotificationAction.create("Formatting", (anActionEvent, notification1) -> {
-            openLink(project, "#preferences.sourceCode.CSV/TSV/PSV");
-        }));
-        notification.addAction(NotificationAction.create("Open CSV Editor homepage", (anActionEvent, notification1) -> {
-            openLink(project, "https://github.com/SeeSharpSoft/intellij-csv-validator");
-        }));
-
-        Notifications.Bus.notify(notification);
     }
 }
